@@ -1,9 +1,8 @@
 ## iOS Activation Bypass Instructions for A7 Devices ##
 ### Confirmed Working Devices ###
-- iOS 12.5.6
-  - iPad Air Gen 1 (As of 10/27/2022)
+
 - iOS 12.5.7
-  - iPad Mini 3 (As of 01/13/2025 - Thanks to [adamk324](<https://github.com/adamk324> "adamk324"))
+  - iPad Air 1st Gen
   
 ### Jailbreak the iDevice ###
 - Jailbreak with Checkra1n 0.10.2 
@@ -14,12 +13,7 @@
   - Unplug the iDevice after ~15-20 seconds of the screen showing 'Right Before Trigger...' then plug the iDevice back in after 1-2 seconds.  You should see a 'Booting Up' message immediately after plugging the device back in.  If you don't you'll likely have to start all over with checkra!n.  If you keep failing you can try and restore the iOS firmware in iTunes and start over again.
 
 ### Bypass iCloud Activation ###
-- Boot to Windows
 
-- Download libimobiledevice
-  - https://github.com/libimobiledevice-win32/imobiledevice-net/releases/download/v1.3.17/libimobiledevice.1.2.1-r1122-win-x64.zip
-
-- Extract zip and open a Powershell window in the extracted directory
 - Start iProxy
   ```
   .\iproxy.exe 22 44
@@ -27,15 +21,10 @@
   - 22 is the local masquerade port
   - 44 is the port SSH is running on on the iDevice (SSH on the iDevice is 44 per Checkra1n docs)
 
-- Open a second powershell window
+- Open a second shell
 - Type: **ssh root@127.0.0.1**
   - Password: **alpine**
 
-- Open WinSCP
-  - Connect via SCP to 127.0.0.1
-    - User: root
-    - Password: alpine
- 
 - On the iDevice, continue to the 'Chose a Wi-Fi Netowrk' screen but **DO NOT** connect
 
 - In the SSH Powershell console enter the following commands in order:
@@ -45,8 +34,11 @@
     rm /usr/libexec/mobileactivationd
     uicache --all
     ```
-- In WinSCP Transfer the mobileactivationd file to the directory **/usr/libexec/**
-  - Full path should be: **/usr/libexec/mobileactivationd**
+- On your pc do: xxd -p mobileactivationd mbact.hex
+- Open mbact.hex, copy every single line to clipboard
+- In the ipad SSH Console go to /usr/libexec/ and do vi mbact.hex
+- Paste everything and do :wq
+- After that, enter the command xxd -r -p mbact.hex mobileactivationd
   
 - Once complete enter the following commands in order:
     ```
